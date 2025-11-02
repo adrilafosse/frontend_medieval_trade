@@ -1,0 +1,36 @@
+<h1>Medieval trade</h1>
+<div class="carte_profil">
+  <div class="titre">Profil</div>
+  <div class="sous_titre">{{utilisateur?.pseudo}}</div>
+  <div class="ligne_metier">
+    <label>{{utilisateur?.metier}}</label>
+    <button type="button" class="bouton_changer_metier" (click)="changer_metier()">Changer de métier</button>
+  </div>
+  <div class="sous_titre">Kamas : {{100}} </div>
+  <div class="ligne_niveau">
+    <label>Niveau {{utilisateur?.niveau}}</label>
+    <button type="button" class="bouton_augmenter_niveau" (click)="augmenter_niveau()">Augmenter de niveau</button>
+  </div>
+</div>
+<div class="carte_fabrication">
+  <div class="titre">Fabrication</div>
+  <div class="container_fabrication" *ngFor="let produit of listfabrication; let i = index">
+    <button type="button" class="bouton_produit" (click)="fabriquer(produit)">{{produit.produit}}</button>
+    <div class="container_ressource" *ngFor="let ressource of listfabrication[i].list">
+      <label>- {{ressource.ressource}} : {{ressource.quantite}}</label>
+    </div>
+  </div>
+</div>
+<div class="carte_inventaire">
+  <div class="titre">Inventaire</div>
+  <div class="container_inventaire">
+    <div class="ligne_inventaire_titre">
+      <button type="button" class="bouton_titre" (click)="trier_nom()">Nom</button>
+      <button type=" button " class=" bouton_titre " (click)=" trier_quantite()">Quantité</button>
+    </div>
+    <div class="ligne_inventaire" *ngFor="let inventaire of listInventaire">
+      <label>{{inventaire.nom}}</label>
+      <div class="quantite_inventaire">{{inventaire.quantite}}</div>
+    </div>
+  </div>
+</div>

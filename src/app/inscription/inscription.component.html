@@ -1,0 +1,14 @@
+<h1>Medieval trade</h1>
+<div class="carte_inscription">
+  <div class="sous_titre">Pseudo</div>
+  <input type="text" [(ngModel)]="pseudo" placeholder="Entrez votre pseudo" class="input">
+  <div class="sous_titre">Mot de passe</div>
+  <input type="password" [(ngModel)]="mot_de_passe" placeholder="Entrez votre mot de passe" class="input">
+  <div class="sous_titre">Métier</div>
+  <select [(ngModel)]="metier" class="metier">
+    <option value="" disabled selected>Choisissez un métier</option>
+    <option *ngFor="let metier of listMetier" [ngValue]="metier">{{ metier.nom }}</option>
+  </select>
+  <button type="button" class="bouton_inscription" (click)="inscription()">Inscription</button>
+</div>
+<button type="button" class="bouton_connexion" (click)="connexion()">Connexion</button>

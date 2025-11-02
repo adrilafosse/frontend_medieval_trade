@@ -1,0 +1,66 @@
+.carte_inscription {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    margin: auto;
+    width: 95%;
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+
+.sous_titre {
+    font-size: 5vw;
+    margin-left: 5%;
+}
+
+.input {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 90%;
+    padding: 1vw;
+    font-size: 4vw;
+    margin: auto;
+    display: block;
+    margin-bottom: 5%;
+    font-family: 'Inknut Antiqua';
+}
+
+.metier {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 90%;
+    padding: 1vw;
+    font-size: 4vw;
+    margin: auto;
+    display: block;
+    font-family: 'Inknut Antiqua';
+}
+
+.bouton_connexion {
+    background-color: #322E2F;
+    color: #FFFFFF;
+    border-radius: 5px;
+    font-weight: bold;
+    display: block;
+    margin: auto;
+    border: none;
+    width: 90%;
+    font-size: 7vw;
+    cursor: pointer;
+    margin-top: 15%;
+    padding: 3%;
+}
+
+.bouton_inscription {
+    background-color: #D9138A;
+    color: #FFFFFF;
+    border-radius: 5px;
+    font-weight: bold;
+    display: block;
+    margin: auto;
+    border: none;
+    width: 90%;
+    padding: 3%;
+    font-size: 7vw;
+    cursor: pointer;
+    margin-top: 10%;
+}
