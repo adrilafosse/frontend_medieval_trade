@@ -8,7 +8,8 @@ import { Fabrication } from '../../models/fabrication';
 import { CommonModule } from '@angular/common';
 import { Ressource } from '../../models/ressource.model';
 import { Inventaire } from '../../models/inventaire.model';
-
+import { Ressource_produit } from '../../models/ressource_produit';
+import { Vente } from '../../models/vente.model';
 @Component({
   selector: 'app-accueil',
   standalone: true,
@@ -25,6 +26,12 @@ export class AccueilComponent {
   listfabrication: Fabrication[] = [];
   bool_nom: Boolean = false;
   bool_quantite: Boolean = false;
+  bool_pseudo: Boolean = false;
+  bool_prix: Boolean = false;
+  listRessourceProduit: Ressource_produit[] = [];
+  listVente: Vente[] = [];
+  ressource_produit: Ressource_produit| null = null;
+  venteSelectionnee: Vente  | null = null;
   url ='http://localhost:5000';
   ngOnInit() {
     this.utilisateur = this.utilisateurService.utilisateur;
@@ -68,6 +75,33 @@ export class AccueilComponent {
         alert(err.error.message);
       }
     });
+    this.http.get(this.url+'/ressource').subscribe({
+      next: (res: any) => {
+        console.log(res.message);
+        for(let i=0;i<res.resultat.length;i++){
+          this.listRessourceProduit.push(new Ressource_produit(res.resultat[i].id_ressource,res.resultat[i].nom));
+        }
+      },
+      error: (err) => {
+        alert(err.error.message);
+      }
+    });
+  }
+  recuperation_vente(){
+    this.listVente = [];
+    this.venteSelectionnee = null;
+    const données3 = {id_utilisateur:this.utilisateur?.id_utilisateur, id_ressource:this.ressource_produit?.id_ressource}
+    this.http.post(this.url+'/tableau_vente', données3).subscribe({
+      next: (res: any) => {
+        console.log(res.message);
+        for(let i=0;i<res.resultat.length;i++){
+          this.listVente.push(new Vente(res.resultat[i].id_vente,res.resultat[i].prix,res.resultat[i].quantite,res.resultat[i].fk_utilisateur,res.resultat[i].fk_ressource,res.resultat[i].nom,res.resultat[i].pseudo));
+        }
+      },
+      error: (err) => {
+        alert(err.error.message);
+      }
+    });
   }
   changer_metier(){}
   augmenter_niveau(){}
@@ -89,5 +123,28 @@ export class AccueilComponent {
       this.listInventaire.sort((a, b) => b.quantite - a.quantite);
       this.bool_quantite = false;
     }
+  }
+  vendre(){}
+
+  trier_pseudo(){
+    if(this.bool_pseudo == false){
+      this.listVente.sort((a, b) => a.pseudo.localeCompare(b.pseudo));
+      this.bool_pseudo = true;
+    }else{
+      this.listVente.sort((a, b) => b.pseudo.localeCompare(a.pseudo));
+      this.bool_pseudo = false;
+    }
+  }
+  trier_prix(){
+    if(this.bool_prix == false){
+      this.listVente.sort((a, b) => a.prix - b.prix);
+      this.bool_prix = true;
+    }else{
+      this.listVente.sort((a, b) => b.prix - a.prix);
+      this.bool_prix = false;
+    }
+  }
+  acheter(){
+    console.log(this.venteSelectionnee)
   }
 }

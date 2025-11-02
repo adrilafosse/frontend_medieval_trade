@@ -33,4 +33,25 @@
       <div class="quantite_inventaire">{{inventaire.quantite}}</div>
     </div>
   </div>
+  <button type=" button" class=" bouton_vendre" (click)=" vendre()">Vendre</button>
+</div>
+<div class="carte_tableau_vente">
+  <div class="titre">Tableau des ventes</div>
+  <select [(ngModel)]="ressource_produit" (ngModelChange)="recuperation_vente()" class="ressource_produit">
+    <option value="" disabled selected>Choisissez une ressource</option>
+    <option *ngFor="let ressource_produit of listRessourceProduit" [ngValue]="ressource_produit">
+      {{ressource_produit.nom}}</option>
+  </select>
+  <div class="container_vente" *ngIf="this.listVente.length > 0">
+    <div class="ligne_vente_titre">
+      <button type="button" class="bouton_titre_vente" (click)="trier_pseudo()">Pseudo</button>
+      <button type=" button " class=" bouton_titre_vente" (click)=" trier_prix()">Prix</button>
+    </div>
+    <div class="ligne_vente" *ngFor="let vente of listVente">
+      <label>{{vente.pseudo}}</label>
+      <label>{{vente.prix}}</label>
+      <input type="radio" name="choix" class="radio" [value]="vente" [(ngModel)]="venteSelectionnee">
+    </div>
+  </div>
+  <button type=" button" class=" bouton_achete" (click)=" acheter()">Acheter</button>
 </div>
