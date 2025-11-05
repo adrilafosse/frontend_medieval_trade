@@ -6,7 +6,7 @@
     <label>{{utilisateur?.metier}}</label>
     <button type="button" class="bouton_changer_metier" (click)="changer_metier()">Changer de métier</button>
   </div>
-  <div class="sous_titre">Kamas : {{100}} </div>
+  <div class="sous_titre">Kamas : {{kamas}}</div>
   <div class="ligne_niveau">
     <label>Niveau {{utilisateur?.niveau}}</label>
     <button type="button" class="bouton_augmenter_niveau" (click)="augmenter_niveau()">Augmenter de niveau</button>
@@ -15,9 +15,34 @@
 <div class="carte_fabrication">
   <div class="titre">Fabrication</div>
   <div class="container_fabrication" *ngFor="let produit of listfabrication; let i = index">
-    <button type="button" class="bouton_produit" (click)="fabriquer(produit)">{{produit.produit}}</button>
-    <div class="container_ressource" *ngFor="let ressource of listfabrication[i].list">
-      <label>- {{ressource.ressource}} : {{ressource.quantite}}</label>
+    <div *ngIf="produit.afficher">
+      <button type="button" class="bouton_produit" (click)="fabriquer(produit)">{{produit.produit}}</button>
+      <div class="container_ressource" *ngFor="let ressource of listfabrication[i].list">
+        <label>- {{ressource.ressource}} : {{ressource.quantite}}</label>
+      </div>
+    </div>
+    <div *ngIf="!produit.afficher">
+      <button type="button" class="bouton_produit" (click)="fabriquer(produit)">{{produit.produit}} :
+        {{produit.qauntite_produit}}</button>
+      <div class="container_fabrication_produit">
+        <div class="ligne_fabrication_titre">
+          <label>Ressources</label>
+          <label>Requis</label>
+          <label>Possédé</label>
+        </div>
+        <div class="ligne_fabrication" *ngFor="let ressource of produit.list">
+          <label>{{ressource.ressource}}</label>
+          <label>{{ressource.quantite * produit.qauntite_produit }}</label>
+          <label>{{ressource.quantite_possede}}</label>
+        </div>
+      </div>
+      <div class="barre_container">
+        <input type="range" min="1" max="20" step="1" [value]="produit.qauntite_produit"
+          (input)="barre($event, produit)" class="barre">
+      </div>
+      <div class="bouton_fabriquer_contenair">
+        <button type="button" class="bouton_fabriquer" (click)="fabriquer_produit(produit)">Fabriquer</button>
+      </div>
     </div>
   </div>
 </div>
@@ -29,18 +54,46 @@
       <button type=" button " class=" bouton_titre " (click)=" trier_quantite()">Quantité</button>
     </div>
     <div class="ligne_inventaire" *ngFor="let inventaire of listInventaire">
-      <label>{{inventaire.nom}}</label>
-      <div class="quantite_inventaire">{{inventaire.quantite}}</div>
+      <div class="nom_inventaire">{{inventaire.nom}}</div>
+      <label>{{inventaire.quantite}}</label>
     </div>
   </div>
-  <button type=" button" class=" bouton_vendre" (click)=" vendre()">Vendre</button>
+  <div *ngIf="afficher">
+    <button type=" button" class=" bouton_vendre" (click)=" vendre()">Mettre en vente</button>
+  </div>
+  <div *ngIf="!afficher">
+    <div class="container_mise_vente">
+      <button type=" button" class=" bouton_vendre" (click)=" vendre()">Mettre en vente</button>
+      <div class="ligne_1">
+        <label>Ressource : </label>
+        <select [(ngModel)]="inventaireSelectionner" class="ressource_produit_vente">
+          <option value="" disabled selected>Choisissez une ressource</option>
+          <option *ngFor="let inventaireSelectionner of listInventaire" [ngValue]="inventaireSelectionner">
+            {{inventaireSelectionner.nom}}</option>
+        </select>
+      </div>
+      <div class="ligne_1">
+        <label>Quantité {{quantite}} : </label>
+        <input type="range" min="0" max={{inventaireSelectionner?.quantite}} step="1" [(ngModel)]="quantite"
+          class="barre">
+      </div>
+      <div class="ligne_1">
+        <label>Prix unitaire : </label>
+        <input type="number" [(ngModel)]="prix_unitaire" placeholder="Prix" min="0" max="100" class="quantite_vente">
+      </div>
+      <div class="contenair_bouton_vente">
+        <button type="button" class="bouton_vente"
+          (click)="vente(inventaireSelectionner?.fk_ressource, quantite, prix_unitaire)">Vendre</button>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="carte_tableau_vente">
   <div class="titre">Tableau des ventes</div>
-  <select [(ngModel)]="ressource_produit" (ngModelChange)="recuperation_vente()" class="ressource_produit">
+  <select [(ngModel)]="ressource_vente" (ngModelChange)="recuperation_vente(ressource_vente)" class="ressource_produit">
     <option value="" disabled selected>Choisissez une ressource</option>
-    <option *ngFor="let ressource_produit of listRessourceProduit" [ngValue]="ressource_produit">
-      {{ressource_produit.nom}}</option>
+    <option *ngFor="let ressource_vente of listRessourceProduit" [ngValue]="ressource_vente">
+      {{ressource_vente.nom}}</option>
   </select>
   <div class="container_vente" *ngIf="this.listVente.length > 0">
     <div class="ligne_vente_titre">
@@ -50,8 +103,26 @@
     <div class="ligne_vente" *ngFor="let vente of listVente">
       <label>{{vente.pseudo}}</label>
       <label>{{vente.prix}}</label>
-      <input type="radio" name="choix" class="radio" [value]="vente" [(ngModel)]="venteSelectionnee">
+      <input type="radio" name="choix" class="radio" [value]="vente" [(ngModel)]="venteSelectionnee"
+        (click)="clickRadio(vente)">
+    </div>
+    <div *ngIf="venteSelectionnee">
+      <div class="container_acheter">
+        <div class="ligne_acheter">
+          <label>Kamas : </label>
+          <label>{{kamas}}</label>
+        </div>
+        <div class="ligne_acheter">
+          <label>Prix : </label>
+          <label>{{venteSelectionnee.prix * quantiteAchat}}</label>
+        </div>
+        <div class="ligne_acheter">
+          <label>Quantité {{quantiteAchat}} : </label>
+          <input type="range" min="1" [max]="venteSelectionnee.quantite > 20 ? 20 : venteSelectionnee.quantite" step="1"
+            [(ngModel)]="quantiteAchat" class="barre">
+        </div>
+        <button type=" button" class=" bouton_achete" (click)=" acheter()">Acheter</button>
+      </div>
     </div>
   </div>
-  <button type=" button" class=" bouton_achete" (click)=" acheter()">Acheter</button>
 </div>

@@ -6,5 +6,5 @@ import { AccueilComponent } from './accueil/accueil.component';
 export const routes: Routes = [
   { path: '', component: ConnexionComponent },
   { path: 'inscription', component: InscriptionComponent },
-  { path: 'accueil', component: AccueilComponent },
+  { path: 'accueil', component: AccueilComponent }
 ];

@@ -39,11 +39,10 @@
     border-radius: 12px;
     margin: auto;
     width: 95%;
-    padding-bottom: 10%;
     color: #FFFFFF;
     font-size: 5vw;
-    margin-bottom: 5%;
     padding-top: 5%;
+    padding-bottom: 5%;
 }
 
 .container_fabrication {
@@ -118,7 +117,8 @@
     width: 60%;
     font-size: 4vw;
     cursor: pointer;
-    margin-left: 5%;
+    margin: auto;
+    display: block;
     font-family: 'Inknut Antiqua';
 }
 
@@ -133,12 +133,13 @@
 
 .container_ressource {
     font-size: 4vw;
-    padding-left: 20%;
+    padding-left: 10%;
+    margin-top: 3%;
 }
 
 .ligne_inventaire_titre {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 3fr 2fr;
     gap: 10px;
     margin-bottom: 2%;
     margin-top: 2%;
@@ -146,36 +147,37 @@
 
 .ligne_inventaire {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 3fr 2fr;
     gap: 10px;
-    margin-right: auto;
+    place-items: center;
+}
+
+.nom_inventaire {
+    justify-self: start;
     margin-left: 5%;
 }
 
-.quantite_inventaire {
-    margin-left: auto;
-    margin-right: 45%;
-}
-
 .bouton_vendre {
-    background-color: #252424;
+    background-color: #9e9a3e;
     color: #FFFFFF;
     border-radius: 5px;
-    width: 40%;
+    width: 95%;
+    border: none;
     font-size: 4vw;
     cursor: pointer;
     font-family: 'Inknut Antiqua';
     display: block;
-    margin: 5% auto 0;
+    margin: 7% auto 0;
 }
 
 .ressource_produit {
     margin: auto;
     display: block;
     font-family: 'Inknut Antiqua';
-    font-size: 3vw;
+    font-size: 3.5vw;
     border-radius: 5px;
     width: 70%;
+    text-align: center;
 }
 
 .bouton_titre_vente {
@@ -214,8 +216,8 @@
 }
 
 .bouton_achete {
-    background-color: #b71175;
-    color: #FFFFFF;
+    background-color: #ffffff;
+    color: #000000;
     border-radius: 5px;
     width: 40%;
     font-size: 4vw;
@@ -223,4 +225,160 @@
     font-family: 'Inknut Antiqua';
     display: block;
     margin: 5% auto 0;
+}
+
+.carte_fabrication {
+    background-color: #D9138A;
+    border-radius: 12px;
+    margin: auto;
+    width: 95%;
+    padding-bottom: 5%;
+    color: #ffffff;
+    font-size: 4vw;
+    margin-bottom: 5%;
+    padding-top: 5%;
+}
+
+.container_fabrication_produit {
+    width: 95%;
+}
+
+.ligne_fabrication_titre {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 2%;
+    margin-top: 2%;
+    place-items: center;
+}
+
+.bouton_titre_produit {
+    background-color: #b71175;
+    font-family: 'Inknut Antiqua';
+    font-size: 4vw;
+    text-decoration: underline;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #ffffff;
+    width: 100%;
+}
+
+.ligne_fabrication {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 10px;
+    place-items: center;
+    font-size: 3.5vw;
+}
+
+.ligne_fabrication_titre label {
+    font-size: 4vw;
+    text-decoration: underline;
+}
+
+.barre {
+    width: 60%;
+}
+
+.barre_container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5%;
+    margin-top: 5%;
+}
+
+.bouton_fabriquer {
+    background-color: #ffffff;
+    border-radius: 5px;
+    width: 40%;
+    font-size: 3.5vw;
+    cursor: pointer;
+    color: black;
+    font-family: 'Inknut Antiqua';
+}
+
+.bouton_fabriquer_contenair {
+    display: flex;
+    justify-content: center;
+}
+
+.ligne_1 {
+    display: flex;
+    align-items: center;
+}
+
+.container_mise_vente {
+    background-color: #9e9a3e;
+    width: 95%;
+    padding-bottom: 3%;
+    font-size: 4vw;
+    color: #FFFFFF;
+    border-radius: 5px;
+    margin-top: 7%;
+    margin: auto;
+}
+
+.ressource_produit_vente {
+    margin-right: auto;
+    font-family: 'Inknut Antiqua';
+    font-size: 3.5vw;
+    border-radius: 5px;
+    width: 90%;
+    text-align: center;
+}
+
+.quantite_vente {
+    width: 25%;
+    margin-right: auto;
+    font-family: 'Inknut Antiqua';
+    font-size: 3.5vw;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.ligne_1 {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 5px;
+    margin-top: 5%;
+    margin-left: 1%;
+}
+
+.ligne_1 label {
+    margin-left: 10%;
+}
+
+.bouton_vente {
+    background-color: #ffffff;
+    border-radius: 5px;
+    width: 40%;
+    font-size: 3.5vw;
+    cursor: pointer;
+    color: black;
+    font-family: 'Inknut Antiqua';
+}
+
+.contenair_bouton_vente {
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+.container_acheter {
+    background-color: #D9138A;
+    width: 95%;
+    padding-bottom: 3%;
+    padding-top: 1%;
+    font-size: 4vw;
+    color: #FFFFFF;
+    border-radius: 5px;
+    margin: 8% auto 0;
+}
+
+.ligne_acheter {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    margin-top: 3%;
+    margin-left: 5%;
 }
