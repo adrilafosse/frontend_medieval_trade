@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
 })
 export class InscriptionComponent {
   constructor(private http: HttpClient, private router: Router, private utilisateurService: UtilisateurService) {}
-  url ='http://localhost:5000';
+  url ='http://localhost:8080';
 
   pseudo: string = '';
   mot_de_passe: string = '';
