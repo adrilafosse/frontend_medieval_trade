@@ -36,7 +36,7 @@
     font-size: 7vw;
     cursor: pointer;
     margin-top: 15%;
-    padding: 3%;
+    font-family: 'Inknut Antiqua';
 }
 
 .bouton_inscription {
@@ -48,8 +48,8 @@
     margin: auto;
     border: none;
     width: 90%;
-    padding: 3%;
     font-size: 7vw;
     cursor: pointer;
     margin-top: 20%;
+    font-family: 'Inknut Antiqua';
 }

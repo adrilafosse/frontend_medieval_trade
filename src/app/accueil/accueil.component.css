@@ -10,6 +10,18 @@
     padding-top: 5%;
 }
 
+.carte_changer_metier {
+    background-color: #E2D810;
+    border-radius: 12px;
+    margin: auto;
+    width: 95%;
+    padding-bottom: 10%;
+    color: #000000;
+    font-size: 5vw;
+    margin-bottom: 5%;
+    padding-top: 5%;
+}
+
 .carte_fabrication {
     background-color: #D9138A;
     border-radius: 12px;
@@ -62,9 +74,26 @@
 }
 
 .titre {
+    margin-left: 10%;
     text-align: center;
     font-weight: bold;
     font-size: 5vw;
+}
+
+.titre_changer_metier {
+    text-align: center;
+    font-weight: bold;
+    font-size: 5vw;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.texte {
+    margin-top: 5%;
+    text-align: center;
+    font-size: 4.5vw;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .sous_titre {
@@ -93,6 +122,32 @@
     color: black;
     margin-left: auto;
     margin-right: 5%;
+    font-family: 'Inknut Antiqua';
+}
+
+.bouton_augmenter_niveau_2 {
+    background-color: #E2D810;
+    border-radius: 5px;
+    border: none;
+    width: 25%;
+    font-size: 3.5vw;
+    cursor: pointer;
+    color: black;
+    margin-left: auto;
+    margin-right: 5%;
+    font-family: 'Inknut Antiqua';
+}
+
+.bouton_changer_metier_2 {
+    background-color: #E2D810;
+    border-radius: 5px;
+    border: none;
+    width: 50%;
+    font-size: 3.5vw;
+    cursor: pointer;
+    color: black;
+    margin-left: auto;
+    margin-right: 10%;
     font-family: 'Inknut Antiqua';
 }
 
@@ -318,6 +373,15 @@
     margin: auto;
 }
 
+.metier {
+    margin-right: auto;
+    font-family: 'Inknut Antiqua';
+    font-size: 3.5vw;
+    border-radius: 5px;
+    width: 90%;
+    text-align: center;
+}
+
 .ressource_produit_vente {
     margin-right: auto;
     font-family: 'Inknut Antiqua';
@@ -365,7 +429,7 @@
 }
 
 .container_acheter {
-    background-color: #D9138A;
+    background-color: #b71175;
     width: 95%;
     padding-bottom: 3%;
     padding-top: 1%;
@@ -381,4 +445,27 @@
     gap: 5px;
     margin-top: 3%;
     margin-left: 5%;
+}
+
+.ligne_changer_metier {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    margin-top: 3%;
+    margin-left: 5%;
+}
+
+.contenair_bool_acheter {
+    background-color: #b71175;
+    width: 95%;
+    padding-bottom: 1%;
+    padding-top: 1%;
+    font-size: 4vw;
+    color: #FFFFFF;
+    border-radius: 5px;
+    margin: 8% auto 0;
+}
+
+.produit_achete {
+    text-align: center;
 }

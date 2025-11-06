@@ -10,6 +10,7 @@ import { Ressource } from '../../models/ressource.model';
 import { Inventaire } from '../../models/inventaire.model';
 import { Ressource_produit } from '../../models/ressource_produit';
 import { Vente } from '../../models/vente.model';
+import { Metier } from '../../models/metier.model';
 
 @Component({
   selector: 'app-accueil',
@@ -21,6 +22,10 @@ import { Vente } from '../../models/vente.model';
 export class AccueilComponent {
   constructor(private http: HttpClient, private router: Router, private utilisateurService: UtilisateurService) {}
 
+  prix_augmenter_niveau : number = 0;
+  bool_augmenter_niveau : Boolean = false;
+  bool_changer_metier : Boolean = false;
+  bool_acheter : Boolean = false;
   inventaireSelectionner : Inventaire | null = null;
   quantiteAchat : number =1;
   kamas : number = 0;
@@ -43,6 +48,8 @@ export class AccueilComponent {
   venteSelectionnee: Vente  | null = null;
   afficherProduit: Boolean = true
   fabrication: Fabrication | null = null;
+  listMetier: Metier[] = [];
+  metier : Metier | null= null;
 
   url ='http://localhost:5000';
   barre(event: Event, produit : Fabrication) {
@@ -84,8 +91,70 @@ export class AccueilComponent {
       }
     });
   }
-  changer_metier(){}
-  augmenter_niveau(){}
+  changer_metier(){
+    this.bool_changer_metier = !this.bool_changer_metier
+    this.listMetier = []
+    this.http.get(this.url+'/metiers').subscribe({
+          next: (res: any) => {
+            console.log(res.message);
+            for(let i=0;i<res.resultat.length;i++){
+              if(res.resultat[i].id_metier != this.utilisateur?.fk_metier){
+                this.listMetier.push(new Metier(res.resultat[i].id_metier, res.resultat[i].nom));
+              }
+            }
+          },
+          error: (err) => {
+            alert(err.error.message);
+          }
+        });;
+  }
+  augmenter_niveau(){
+    if(this.utilisateur?.niveau == 1){
+      this.prix_augmenter_niveau = 250;
+    }else{
+      this.prix_augmenter_niveau = 500;
+    }
+    this.bool_augmenter_niveau = !this.bool_augmenter_niveau;
+  }
+  changer_niveau(){
+    const données = {id_utilisateur:this.utilisateur?.id_utilisateur}
+    this.http.post(this.url+'/augmenter_niveau', données).subscribe({
+      next: (res: any) => {
+        console.log(res.message);
+        this.listfabrication = [];
+        for(let i=0;i<res.resultat.length;i++){
+          if(this.listfabrication.length > 0){
+            let bool = false;
+            for(let j =0;j<this.listfabrication.length;j++){
+              if(this.listfabrication[j].id_fabrication == res.resultat[i].id_fabrication){
+                this.listfabrication[j].list.push(new Ressource(res.resultat[i].nom, res.resultat[i].quantite,res.resultat[i].quantite_possedee))
+                bool = true;
+              }
+            }if(bool == false){
+              this.listRessource.push(new Ressource(res.resultat[i].nom, res.resultat[i].quantite,res.resultat[i].quantite_possedee));
+              this.listfabrication.push(new Fabrication(res.resultat[i].id_fabrication,res.resultat[i].produit, this.listRessource, true, 1));
+              this.listRessource = [];
+            }
+          }else{
+            this.listRessource.push(new Ressource(res.resultat[i].nom, res.resultat[i].quantite,res.resultat[i].quantite_possedee));
+            this.listfabrication.push(new Fabrication(res.resultat[i].id_fabrication,res.resultat[i].produit,this.listRessource, true, 1));
+            this.listRessource = [];
+          }
+        }
+        this.kamas = this.kamas - this.prix_augmenter_niveau;
+        this.bool_augmenter_niveau = false;
+        if(this.utilisateur?.niveau == 1){
+          this.utilisateur?.setNiveau(2);
+        }else{
+          this.utilisateur?.setNiveau(3);
+        }
+
+      },
+      error: (err) => {
+        alert(err.error.message);
+      }
+    });
+  }
   fabriquer(produit : Fabrication){
     produit.afficher = ! produit.afficher;
     produit.qauntite_produit = 1;
@@ -156,12 +225,12 @@ export class AccueilComponent {
               }
             }
           }
+          this.bool_acheter = true;
       },
       error: (err) => {
         alert(err.error.message);
       }
     });
-
   }
   fabriquer_produit(produit : Fabrication){
     const données = {id_utilisateur:this.utilisateur?.id_utilisateur,id_fabrication:produit.id_fabrication, quantite: produit.qauntite_produit }
@@ -276,10 +345,47 @@ export class AccueilComponent {
     }
   }
   clickRadio(vente : any){
+    this.bool_acheter = false;
     if (this.venteSelectionnee == vente) {
       this.venteSelectionnee = null;
     } else {
     this.venteSelectionnee = vente;
   }
+  }
+  changer_metier_valider(){
+    const données = {id_utilisateur:this.utilisateur?.id_utilisateur, id_metier:this.metier?.id_metier}
+    this.http.post(this.url+'/changer_metier', données).subscribe({
+      next: (res: any) => {
+        console.log(res.message);
+        this.listfabrication = [];
+        for(let i=0;i<res.resultat.length;i++){
+          if(this.listfabrication.length > 0){
+            let bool = false;
+            for(let j =0;j<this.listfabrication.length;j++){
+              if(this.listfabrication[j].id_fabrication == res.resultat[i].id_fabrication){
+                this.listfabrication[j].list.push(new Ressource(res.resultat[i].nom, res.resultat[i].quantite,res.resultat[i].quantite_possedee))
+                bool = true;
+              }
+            }if(bool == false){
+              this.listRessource.push(new Ressource(res.resultat[i].nom, res.resultat[i].quantite,res.resultat[i].quantite_possedee));
+              this.listfabrication.push(new Fabrication(res.resultat[i].id_fabrication,res.resultat[i].produit, this.listRessource, true, 1));
+              this.listRessource = [];
+            }
+          }else{
+            this.listRessource.push(new Ressource(res.resultat[i].nom, res.resultat[i].quantite,res.resultat[i].quantite_possedee));
+            this.listfabrication.push(new Fabrication(res.resultat[i].id_fabrication,res.resultat[i].produit,this.listRessource, true, 1));
+            this.listRessource = [];
+          }
+        }
+        this.kamas = this.kamas - 250;
+        this.bool_changer_metier = false;
+        this.utilisateur?.setNiveau(1);
+        this.utilisateur?.setmetier(this.metier?.nom)
+        this.utilisateur?.setFk_metier(this.metier?.id_metier)
+      },
+      error: (err) => {
+        alert(err.error.message);
+      }
+    });
   }
 }
