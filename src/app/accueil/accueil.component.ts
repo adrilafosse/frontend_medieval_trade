@@ -51,8 +51,8 @@ export class AccueilComponent {
   listMetier: Metier[] = [];
   metier : Metier | null= null;
 
-  url ='https://backend-medieval-trade-345909199633.europe-west1.run.app';
-  //url ='http://localhost:8080';
+  //url ='https://backend-medieval-trade-345909199633.europe-west1.run.app';
+  url ='http://localhost:8080';
   barre(event: Event, produit : Fabrication) {
     const input = event.target as HTMLInputElement;
     produit.qauntite_produit = input.valueAsNumber;
@@ -77,7 +77,6 @@ export class AccueilComponent {
     });
   }
   recuperation_vente(ressource_vente : Ressource_produit | null ){
-    console.log(ressource_vente)
     this.listVente = [];
     this.venteSelectionnee = null;
     const données3 = {id_utilisateur:this.utilisateur?.id_utilisateur, id_ressource:ressource_vente?.id_ressource}
@@ -386,6 +385,22 @@ export class AccueilComponent {
         this.utilisateur?.setNiveau(1);
         this.utilisateur?.setmetier(this.metier?.nom)
         this.utilisateur?.setFk_metier(this.metier?.id_metier)
+      },
+      error: (err) => {
+        alert(err.error.message);
+      }
+    });
+  }
+  changer_charger_kamas(){
+    const données2 = {id_utilisateur:this.utilisateur?.id_utilisateur}
+    this.http.post(this.url+'/inventaire', données2).subscribe({
+      next: (res: any) => {
+        console.log(res.message);
+        for(let i=0;i<res.resultat.length;i++){
+          if(res.resultat[i].fk_ressource == 16){
+            this.kamas = res.resultat[i].quantité;
+          }
+        }
       },
       error: (err) => {
         alert(err.error.message);

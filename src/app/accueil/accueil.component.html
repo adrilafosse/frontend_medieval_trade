@@ -15,7 +15,10 @@
       <button type="button" class=" bouton_changer_metier_2" (click)=" changer_metier_valider() ">Valider</button>
     </div>
   </div>
-  <div class=" sous_titre ">Kamas : {{kamas}}</div>
+  <div class="ligne_charger">
+    <div class="sous_titre_kamas">Kamas : {{kamas}}</div>
+    <button type="button" class=" bouton_charger" (click)=" changer_charger_kamas() ">Charger</button>
+  </div>
   <div *ngIf="utilisateur?.niveau != 3">
     <div class=" ligne_niveau ">
       <label>Niveau {{utilisateur?.niveau}}</label>

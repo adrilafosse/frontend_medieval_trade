@@ -14,8 +14,8 @@ import { UtilisateurService } from '../../service/utilisateur.service';
 })
 export class ConnexionComponent {
   constructor(private http: HttpClient, private router: Router, private utilisateurService: UtilisateurService) {}
-  url ='https://backend-medieval-trade-345909199633.europe-west1.run.app';
-  //url ='http://localhost:8080';
+  //url ='https://backend-medieval-trade-345909199633.europe-west1.run.app';
+  url ='http://localhost:8080';
 
   pseudo: string = '';
   mot_de_passe: string = '';
