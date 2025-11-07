@@ -51,8 +51,8 @@ export class AccueilComponent {
   listMetier: Metier[] = [];
   metier : Metier | null= null;
 
-  //url ='https://backend-medieval-trade-345909199633.europe-west1.run.app';
-  url ='http://localhost:8080';
+  url ='https://backend-medieval-trade-345909199633.europe-west1.run.app';
+  //url ='http://localhost:8080';
   barre(event: Event, produit : Fabrication) {
     const input = event.target as HTMLInputElement;
     produit.qauntite_produit = input.valueAsNumber;
