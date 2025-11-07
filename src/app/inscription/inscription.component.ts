@@ -44,7 +44,7 @@ export class InscriptionComponent {
       this.http.post(this.url+'/inscription', données).subscribe({
           next: (res: any) => {
             console.log(res.message);
-            this.utilisateurService.utilisateur = new Utilisateur(res.resultat.id_utilisateur,this.pseudo, this.metier.id_metier, 1, this.metier.nom);
+            this.utilisateurService.utilisateur = new Utilisateur(res.resultat.id_utilisateur,this.pseudo, this.metier.id_metier, 3, this.metier.nom);
             this.router.navigate(['accueil']);
           },
           error: (err) => {
