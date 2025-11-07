@@ -77,6 +77,7 @@ export class AccueilComponent {
     });
   }
   recuperation_vente(ressource_vente : Ressource_produit | null ){
+    console.log(ressource_vente)
     this.listVente = [];
     this.venteSelectionnee = null;
     const données3 = {id_utilisateur:this.utilisateur?.id_utilisateur, id_ressource:ressource_vente?.id_ressource}
@@ -84,7 +85,9 @@ export class AccueilComponent {
       next: (res: any) => {
         console.log(res.message);
         for(let i=0;i<res.resultat.length;i++){
-          this.listVente.push(new Vente(res.resultat[i].id_vente,res.resultat[i].prix,res.resultat[i].quantite,res.resultat[i].fk_utilisateur,res.resultat[i].fk_ressource,res.resultat[i].nom,res.resultat[i].pseudo));
+          if(res.resultat[i].fk_ressource != 16){
+            this.listVente.push(new Vente(res.resultat[i].id_vente,res.resultat[i].prix,res.resultat[i].quantite,res.resultat[i].fk_utilisateur,res.resultat[i].fk_ressource,res.resultat[i].nom,res.resultat[i].pseudo));
+          }
         }
       },
       error: (err) => {
